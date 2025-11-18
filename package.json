@@ -4,14 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000",
-    "build": "pnpm codegen && vite build",
+    "build": "pnpm codegen && dotenvx run -- vite build",
     "build:local": "pnpm codegen:local && vite build",
     "serve": "vite preview",
     "test": "vitest run",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check",
-    "codegen": "graphql-codegen",
+    "codegen": "dotenvx run -- graphql-codegen",
     "codegen:local": "dotenvx run --env-file .env.local -- graphql-codegen"
   },
   "dependencies": {
