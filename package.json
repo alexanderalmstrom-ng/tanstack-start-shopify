@@ -11,7 +11,7 @@
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check",
-    "codegen": "dotenvx run --env-file .env -- graphql-codegen",
+    "codegen": "graphql-codegen",
     "codegen:local": "dotenvx run --env-file .env.local -- graphql-codegen"
   },
   "dependencies": {
