@@ -20,7 +20,7 @@ const config: CodegenConfig = {
       },
     },
   ],
-  documents: ["src/**/*.{ts,tsx}"],
+  documents: ["src/**/*.{ts,tsx}", "!src/gql/**/*"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./src/gql/": {
