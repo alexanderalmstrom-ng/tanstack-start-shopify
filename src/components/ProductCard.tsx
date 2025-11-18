@@ -31,6 +31,7 @@ export default function ProductCard({
           loading="eager"
           width={productImageWidth}
           height={productImageHeight}
+          sizes="100vw"
         />
       )}
       <h3>{productName}</h3>
