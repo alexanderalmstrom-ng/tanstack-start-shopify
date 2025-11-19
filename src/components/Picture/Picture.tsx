@@ -1,5 +1,4 @@
 import type { ComponentProps } from "react";
-import generateSizesAttribute from "./utils/generateSizesAttribute";
 import generateSrcSet from "./utils/generateSrcSet";
 
 // Image size breakpoints from 640px to 2048px with 100vw fallback
@@ -33,6 +32,7 @@ export type PictureProps = ComponentProps<"picture"> & {
   src: ComponentProps<"img">["src"];
   mobileSrc?: ComponentProps<"img">["src"];
   alt?: ComponentProps<"img">["alt"];
+  sizes?: ComponentProps<"img">["sizes"];
   loading?: ComponentProps<"img">["loading"];
   quality?: number;
   imageSizes?: readonly (Size | string)[] | string;
@@ -54,6 +54,7 @@ export default function Picture({
   imageSizes = DEFAULT_IMAGE_SIZES,
   quality = DEFAULT_QUALITY,
   format = DEFAULT_FORMAT,
+  sizes,
   ...props
 }: PictureProps) {
   return (
@@ -66,6 +67,7 @@ export default function Picture({
             quality={quality}
             imageSizes={imageSizes}
             media="(max-width: 768px)"
+            sizes={sizes}
           />
           <PictureSourceElement
             src={mobileSrc}
@@ -73,6 +75,7 @@ export default function Picture({
             quality={quality}
             imageSizes={imageSizes}
             media="(max-width: 768px)"
+            sizes={sizes}
           />
         </>
       )}
@@ -82,6 +85,7 @@ export default function Picture({
         quality={quality}
         imageSizes={imageSizes}
         media={mobileSrc ? "(min-width: 768px)" : undefined}
+        sizes={sizes}
       />
       <PictureSourceElement
         src={src}
@@ -89,6 +93,7 @@ export default function Picture({
         quality={quality}
         imageSizes={imageSizes}
         media={mobileSrc ? "(min-width: 768px)" : undefined}
+        sizes={sizes}
       />
       <PictureImgElement
         src={src}
@@ -97,6 +102,7 @@ export default function Picture({
         format={format}
         quality={quality}
         imageSizes={imageSizes}
+        sizes={sizes}
       />
     </picture>
   );
@@ -115,10 +121,6 @@ function PictureSourceElement({
   quality?: PictureProps["quality"];
   imageSizes?: PictureProps["imageSizes"];
 }) {
-  const sizes =
-    typeof imageSizes === "string"
-      ? imageSizes
-      : generateSizesAttribute(imageSizes);
   const type = format === "jpg" ? "image/jpeg" : `image/${format}`;
   const srcSet = generateSrcSet({
     src,
@@ -128,15 +130,7 @@ function PictureSourceElement({
     quality,
   });
 
-  return (
-    <source
-      srcSet={srcSet}
-      type={type}
-      media={media}
-      sizes={sizes}
-      {...props}
-    />
-  );
+  return <source srcSet={srcSet} type={type} media={media} {...props} />;
 }
 
 function PictureImgElement({
@@ -145,6 +139,7 @@ function PictureImgElement({
   format,
   quality,
   imageSizes,
+  sizes,
   ...props
 }: ComponentProps<"img"> & {
   format?: PictureProps["format"];
@@ -155,10 +150,6 @@ function PictureImgElement({
     return null;
   }
 
-  const sizes =
-    typeof imageSizes === "string"
-      ? imageSizes
-      : generateSizesAttribute(imageSizes);
   const srcSet = generateSrcSet({
     src,
     format,
