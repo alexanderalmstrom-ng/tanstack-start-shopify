@@ -1,23 +1,14 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import z from "zod";
-
-const SHOPIFY_SHOP_NAME = z
-  .string()
-  .min(1, "SHOPIFY_SHOP_NAME is required")
-  .parse(process.env.SHOPIFY_SHOP_NAME);
-const SHOPIFY_ACCESS_TOKEN = z
-  .string()
-  .min(1, "SHOPIFY_ACCESS_TOKEN is required")
-  .parse(process.env.SHOPIFY_ACCESS_TOKEN);
 
 const config: CodegenConfig = {
   schema: [
     {
-      [`https://${SHOPIFY_SHOP_NAME}.myshopify.com/api/2025-10/graphql.json`]: {
-        headers: {
-          "Shopify-Storefront-Private-Token": SHOPIFY_ACCESS_TOKEN,
+      [`https://${getShopifyShopName()}.myshopify.com/api/2025-10/graphql.json`]:
+        {
+          headers: {
+            "Shopify-Storefront-Private-Token": getShopifyToken(),
+          },
         },
-      },
     },
   ],
   documents: ["src/**/*.{ts,tsx}", "!src/gql/**/*"],
@@ -41,5 +32,21 @@ const config: CodegenConfig = {
     },
   },
 };
+
+function getShopifyShopName() {
+  if (process.env.VITE_SHOPIFY_SHOP_NAME) {
+    return process.env.VITE_SHOPIFY_SHOP_NAME;
+  }
+
+  throw new Error("No Shopify shop name found");
+}
+
+function getShopifyToken() {
+  if (process.env.SHOPIFY_ACCESS_TOKEN) {
+    return process.env.SHOPIFY_ACCESS_TOKEN;
+  }
+
+  throw new Error("No Shopify token found");
+}
 
 export default config;
