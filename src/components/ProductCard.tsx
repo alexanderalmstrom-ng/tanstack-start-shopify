@@ -29,7 +29,7 @@ export default function ProductCard({
           src={productImageUrl}
           alt={productImageAltText ?? productName}
           loading={loading}
-          imageSizes={[320, 640, "50vw"]}
+          imageSizes={[320, 640, 768, 1024, 1280, "50vw"]}
         />
       )}
       <div className="flex flex-col gap-1 px-2 py-1">

@@ -151,6 +151,10 @@ function PictureImgElement({
   quality?: PictureProps["quality"];
   imageSizes?: PictureProps["imageSizes"];
 }) {
+  if (!src) {
+    return null;
+  }
+
   const sizes =
     typeof imageSizes === "string"
       ? imageSizes
@@ -166,7 +170,7 @@ function PictureImgElement({
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className="h-full w-full object-cover"
-      src={`${src}?w=${DEFAULT_SIZE}?fm=${format}&q=${quality}`}
+      src={`${src}${src.startsWith("?") ? "&" : "?"}width=${DEFAULT_SIZE}?format=${format}&quality=${quality}`}
       srcSet={srcSet}
       sizes={sizes}
       alt={alt}
