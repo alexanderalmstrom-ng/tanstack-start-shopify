@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import Picture from "./Picture/Picture";
+import { Image } from "@unpic/react";
 
 type ProductCardProps = {
   productName: string;
@@ -16,6 +16,8 @@ export default function ProductCard({
   productImageUrl,
   productImageAltText,
   productHandle,
+  productImageWidth,
+  productImageHeight,
   loading = "lazy",
 }: ProductCardProps) {
   return (
@@ -25,13 +27,17 @@ export default function ProductCard({
       params={{ slug: productHandle }}
     >
       {productImageUrl && (
-        <Picture
-          src={productImageUrl}
-          alt={productImageAltText ?? productName}
-          loading={loading}
-          imageSizes={[320, 640, 768, 1024, 1280]}
-          sizes="(min-width: 1024px) 25vw, 50vw"
-        />
+        <picture className="bg-amber-50">
+          <Image
+            className="w-full h-full object-contain aspect-square mix-blend-multiply"
+            src={productImageUrl}
+            alt={productImageAltText ?? productName}
+            width={productImageWidth ?? 2000}
+            height={productImageHeight ?? 2000}
+            sizes="(min-width: 1024px) 25vw, 50vw"
+            loading={loading}
+          />
+        </picture>
       )}
       <div className="flex flex-col gap-1 px-2 py-1">
         <h3>{productName}</h3>

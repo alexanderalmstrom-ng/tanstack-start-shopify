@@ -3,6 +3,7 @@ import generateSrcSet from "./utils/generateSrcSet";
 
 // Image size breakpoints from 640px to 2048px with 100vw fallback
 const DEFAULT_IMAGE_SIZES = [
+  160,
   320,
   640,
   768,
@@ -47,6 +48,7 @@ export type PictureProps = ComponentProps<"picture"> & {
  */
 
 export default function Picture({
+  className,
   src,
   mobileSrc,
   alt = "",
