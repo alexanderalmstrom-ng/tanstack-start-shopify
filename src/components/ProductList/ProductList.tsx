@@ -1,25 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import type { ProductsQuery } from "@/gql/graphql";
 import { useTRPC } from "@/integrations/trpc/react";
-import ProductCard from "./ProductCard";
-
-type MediaNode =
-  ProductsQuery["products"]["edges"][number]["node"]["media"]["nodes"][number];
-
-function isMediaImage(
-  node: MediaNode,
-): node is Extract<MediaNode, { __typename?: "MediaImage" }> {
-  return node.__typename === "MediaImage";
-}
+import { isMediaImage } from "@/utils/product";
+import ProductCard from "../ProductCard";
 
 export default function ProductList() {
   const trpc = useTRPC();
-  const { data: products, isLoading } = useQuery(
-    trpc.shopify.products.queryOptions(),
-  );
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(trpc.shopify.products.queryOptions());
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading products: {error?.message}</div>;
   }
 
   if (!products) {

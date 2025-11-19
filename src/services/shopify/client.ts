@@ -1,4 +1,5 @@
 import type { TypedDocumentString } from "@/gql/graphql";
+import { isServer } from "@/utils/common";
 import { shopifyConfig } from "./config";
 import { shopifyResponseSchema } from "./schema";
 
@@ -10,10 +11,7 @@ export default async function shopifyClient<TResult, TVariables>(
     `https://${shopifyConfig.shopName}.myshopify.com/api/2025-10/graphql.json`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Shopify-Storefront-Private-Token": shopifyConfig.accessToken,
-      },
+      headers: getShopifyClientHeaders(),
       body: JSON.stringify({
         query: query.toString(),
         variables: variables || undefined,
@@ -52,4 +50,31 @@ export default async function shopifyClient<TResult, TVariables>(
     errors: validatedData.errors,
     extensions: validatedData.extensions,
   };
+}
+
+function getShopifyClientHeaders() {
+  if (
+    isServer() &&
+    "privateToken" in shopifyConfig &&
+    typeof shopifyConfig.privateToken === "string"
+  ) {
+    return {
+      "Content-Type": "application/json",
+      "Shopify-Storefront-Private-Token": shopifyConfig.privateToken,
+    } as HeadersInit;
+  }
+
+  if (
+    "publicToken" in shopifyConfig &&
+    typeof shopifyConfig.publicToken === "string"
+  ) {
+    return {
+      "Content-Type": "application/json",
+      "X-Shopify-Storefront-Access-Token": shopifyConfig.publicToken,
+    } as HeadersInit;
+  }
+
+  return {
+    "Content-Type": "application/json",
+  } as HeadersInit;
 }

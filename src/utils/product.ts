@@ -1,7 +1,25 @@
 import { createServerFn } from "@tanstack/react-start";
-import z from "zod";
 import { graphql } from "@/gql";
+import type { ProductsQuery } from "@/gql/graphql";
 import shopifyClient from "@/services/shopify/client";
+
+type MediaNode =
+  ProductsQuery["products"]["edges"][number]["node"]["media"]["nodes"][number];
+
+export function isMediaImage(
+  node: MediaNode,
+): node is Extract<MediaNode, { __typename?: "MediaImage" }> {
+  return node.__typename === "MediaImage";
+}
+
+export async function getProducts() {
+  const { data } = await shopifyClient(productsQuery);
+  return data?.products?.edges?.map((edge) => edge.node);
+}
+
+export const getProductsServerFn = createServerFn().handler(() =>
+  getProducts(),
+);
 
 export const productsQuery = graphql(`
   query Products {
@@ -30,12 +48,3 @@ export const productsQuery = graphql(`
     }
   }
 `);
-
-export async function getProducts() {
-  const { data } = await shopifyClient(productsQuery);
-  return data?.products?.edges?.map((edge) => edge.node);
-}
-
-export const getProductsServerFn = createServerFn().handler(() =>
-  getProducts(),
-);
