@@ -81,14 +81,14 @@ export default function Picture({
         format="avif"
         quality={quality}
         imageSizes={imageSizes}
-        media="(min-width: 768px)"
+        media={mobileSrc ? "(min-width: 768px)" : undefined}
       />
       <PictureSourceElement
         src={src}
         format="webp"
         quality={quality}
         imageSizes={imageSizes}
-        media="(min-width: 768px)"
+        media={mobileSrc ? "(min-width: 768px)" : undefined}
       />
       <PictureImgElement
         src={src}
