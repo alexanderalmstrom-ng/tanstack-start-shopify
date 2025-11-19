@@ -19,22 +19,26 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <Link
-      className="bg-amber-50/30"
+      className="flex flex-col"
       to={`/product/$slug`}
       params={{ slug: productHandle }}
     >
       {productImageUrl && (
-        <img
-          className="w-full h-full object-contain aspect-square mix-blend-multiply"
-          src={productImageUrl}
-          alt={productImageAltText ?? productName}
-          loading="eager"
-          width={productImageWidth}
-          height={productImageHeight}
-          sizes="100vw"
-        />
+        <picture className="bg-amber-50">
+          <img
+            className="w-full h-full object-contain aspect-square mix-blend-multiply"
+            src={productImageUrl}
+            alt={productImageAltText ?? productName}
+            loading="eager"
+            width={productImageWidth}
+            height={productImageHeight}
+            sizes="100vw"
+          />
+        </picture>
       )}
-      <h3>{productName}</h3>
+      <div className="flex flex-col gap-1 px-2 py-1">
+        <h3>{productName}</h3>
+      </div>
     </Link>
   );
 }
