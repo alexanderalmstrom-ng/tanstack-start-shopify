@@ -25,7 +25,7 @@ function RouteComponent() {
   const images = resolveProductImages(product);
 
   return (
-    <main className="grid lg:grid-cols-2 gap-4">
+    <div className="grid lg:grid-cols-2 gap-4">
       {images?.map(
         (image) =>
           image?.image?.url && (
@@ -47,7 +47,7 @@ function RouteComponent() {
         <h1 className="text-2xl">{product.title}</h1>
         {product.description && <p>{product.description}</p>}
       </div>
-    </main>
+    </div>
   );
 }
 

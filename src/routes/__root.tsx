@@ -48,9 +48,11 @@ function RootComponent() {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="flex min-h-screen flex-col antialiased">
         <Header />
-        <Outlet />
+        <main className="grow">
+          <Outlet />
+        </main>
         <TanStackDevtools
           config={{
             position: "bottom-right",
