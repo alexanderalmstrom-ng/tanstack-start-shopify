@@ -170,7 +170,7 @@ function PictureImgElement({
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className="h-full w-full object-cover"
-      src={`${src}${src.startsWith("?") ? "&" : "?"}width=${DEFAULT_SIZE}?format=${format}&quality=${quality}`}
+      src={`${src}${src.includes("?") ? "&" : "?"}width=${DEFAULT_SIZE}?format=${format}&quality=${quality}`}
       srcSet={srcSet}
       sizes={sizes}
       alt={alt}

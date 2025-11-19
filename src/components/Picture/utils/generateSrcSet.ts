@@ -24,7 +24,7 @@ export default function generateSrcSet({
     .filter((imageSize): imageSize is number => typeof imageSize === "number")
     .map(
       (imageSize) =>
-        `${src}${src.startsWith("?") ? "&" : "?"}width=${imageSize}&format=${format}&quality=${quality} ${imageSize}w`,
+        `${src}${src.includes("?") ? "&" : "?"}width=${imageSize}&format=${format}&quality=${quality} ${imageSize}w`,
     )
     .join(", ");
 }
