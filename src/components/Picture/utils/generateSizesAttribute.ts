@@ -21,11 +21,12 @@ export default function generateSizesAttribute(
   const fallback = typeof lastItem === "string" ? lastItem : `100vw`;
 
   const mediaQueries = sizes.map((size) => {
-    const sizeValue = typeof size === "number" ? `${size}px` : size;
-    const breakpoint = typeof size === "number" ? size : parseInt(size, 10);
+    if (typeof size === "string") {
+      return undefined;
+    }
 
-    return `(max-width: ${breakpoint}px) ${sizeValue}`;
+    return `(max-width: ${size}px) ${size}px`;
   });
 
-  return [...mediaQueries, fallback].join(", ");
+  return [...mediaQueries, fallback].filter(Boolean).join(", ");
 }
