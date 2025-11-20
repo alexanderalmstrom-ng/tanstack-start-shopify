@@ -1,18 +1,61 @@
-import type { ReactNode } from "react";
+import { createServerFn } from "@tanstack/react-start";
+import type { ComponentProps } from "react";
+import z from "zod";
+import { createCartServerFn } from "@/lib/cart";
 
-function AddToCartForm({ children }: { children: ReactNode }) {
-  return <form>{children}</form>;
-}
+export const addToCartServerFn = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => {
+    if (!(data instanceof FormData)) {
+      throw new Error("Invalid form data");
+    }
+    return data;
+  })
+  .handler(async ({ data }) => {
+    const variantId = z.string().safeParse(data.get("variantId"));
+    const quantity = z
+      .string()
+      .optional()
+      .transform((value) => (value ? Number(value) : undefined))
+      .safeParse(data.get("quantity"));
 
-export default function AddToCartButton() {
+    if (variantId.error) {
+      throw new Error("Variant ID is required", {
+        cause: variantId.error.cause,
+      });
+    }
+
+    try {
+      const cart = await createCartServerFn({
+        data: {
+          lines: [{ quantity: quantity.data, merchandiseId: variantId.data }],
+        },
+      });
+
+      console.log("Cart created", cart);
+
+      return cart;
+    } catch (error) {
+      console.error("Error adding to cart", error);
+      throw error;
+    }
+  });
+
+type AddToCartButtonProps = ComponentProps<"button"> & {
+  variantId: string;
+};
+
+export default function AddToCartButton({
+  children,
+  variantId,
+  ...props
+}: AddToCartButtonProps) {
   return (
-    <AddToCartForm>
-      <button
-        type="submit"
-        className="bg-primary text-primary-foreground px-6 py-3 w-full"
-      >
-        Add to Cart
-      </button>
-    </AddToCartForm>
+    <button
+      type="submit"
+      className="bg-primary text-primary-foreground px-6 py-3 w-full"
+      {...props}
+    >
+      {children}
+    </button>
   );
 }
