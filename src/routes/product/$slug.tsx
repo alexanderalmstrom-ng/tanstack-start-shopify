@@ -9,12 +9,11 @@ import { createServerFn } from "@tanstack/react-start";
 import { useStore } from "@tanstack/react-store";
 import { Image } from "@unpic/react";
 import z from "zod";
-import AddToCartButton, {
-  addToCartServerFn,
-} from "@/components/AddToCartButton/AddToCartButton";
+import AddToCartButton from "@/components/AddToCartButton/AddToCartButton";
 import { getFragmentData, graphql } from "@/gql";
 import type { ProductBySlugQuery } from "@/gql/graphql";
 import shopifyClient from "@/integrations/shopify/client";
+import { addToCartServerFn } from "@/lib/cart";
 import { getFormDataFromServer } from "@/lib/form";
 
 export const Route = createFileRoute("/product/$slug")({
