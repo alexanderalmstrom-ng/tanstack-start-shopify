@@ -7,17 +7,17 @@ import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
 export const getRouter = () => {
-  const rqContext = TanstackQuery.getContext();
+  const providerContext = TanstackQuery.getProviderContext();
 
   const router = createRouter({
     routeTree,
-    context: { ...rqContext },
+    context: { ...providerContext },
     defaultPreload: "intent",
     scrollRestoration: true,
     scrollRestorationBehavior: "instant",
     Wrap: (props: { children: React.ReactNode }) => {
       return (
-        <TanstackQuery.Provider {...rqContext}>
+        <TanstackQuery.Provider {...providerContext}>
           {props.children}
         </TanstackQuery.Provider>
       );
@@ -26,7 +26,7 @@ export const getRouter = () => {
 
   setupRouterSsrQueryIntegration({
     router,
-    queryClient: rqContext.queryClient,
+    queryClient: providerContext.queryClient,
   });
 
   return router;

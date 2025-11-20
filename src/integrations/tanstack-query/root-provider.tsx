@@ -6,7 +6,7 @@ import superjson from "superjson";
 import { TRPCProvider } from "@/integrations/trpc/react";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 
-function getUrl() {
+function getTrpcApiUrl() {
   const base = (() => {
     if (typeof window !== "undefined") {
       return "";
@@ -22,12 +22,12 @@ export const trpcClient = createTRPCClient<TRPCRouter>({
   links: [
     httpBatchStreamLink({
       transformer: superjson,
-      url: getUrl(),
+      url: getTrpcApiUrl(),
     }),
   ],
 });
 
-export function getContext() {
+export function getProviderContext() {
   const queryClient = new QueryClient({
     defaultOptions: {
       dehydrate: { serializeData: superjson.serialize },
