@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import Cart from "@/components/Cart/Cart";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 import SiteHeader from "../components/SiteHeader";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
@@ -29,7 +30,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "TanStack Start Shopify",
+        description: "A Shopify storefront built with TanStack Start",
       },
     ],
     links: [
@@ -52,6 +54,7 @@ function RootComponent() {
         <SiteHeader />
         <main className="grow">
           <Outlet />
+          <Cart />
         </main>
         <TanStackDevtools
           config={{

@@ -7,5 +7,5 @@ type ProductCardContentProps = {
 export default function ProductCardContent({
   children,
 }: ProductCardContentProps) {
-  return <div className="flex flex-col gap-1 px-2 py-1">{children}</div>;
+  return <div className="flex flex-col gap-1 px-6 py-3">{children}</div>;
 }

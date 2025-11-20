@@ -36,7 +36,7 @@ export default function ProductList() {
           <ProductCard key={product.id} slug={product.handle}>
             <picture className="bg-secondary">
               <Image
-                className="w-full h-full object-contain aspect-square mix-blend-multiply"
+                className="w-full h-full object-contain mix-blend-multiply aspect-square"
                 src={mediaImage?.image?.url}
                 alt={mediaImage?.image?.altText ?? product.title}
                 width={mediaImage?.image?.width ?? 1000}
