@@ -4,7 +4,7 @@ import { Image } from "@unpic/react";
 import z from "zod";
 import { getFragmentData, graphql } from "@/gql";
 import type { ProductBySlugQuery } from "@/gql/graphql";
-import shopifyClient from "@/services/shopify/client";
+import shopifyClient from "@/integrations/shopify/client";
 
 export const Route = createFileRoute("/product/$slug")({
   component: RouteComponent,

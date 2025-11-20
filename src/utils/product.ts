@@ -1,6 +1,6 @@
 import { graphql } from "@/gql";
 import type { ProductsQuery } from "@/gql/graphql";
-import shopifyClient from "@/services/shopify/client";
+import shopifyClient from "@/integrations/shopify/client";
 
 type MediaNode =
   ProductsQuery["products"]["edges"][number]["node"]["media"]["nodes"][number];
