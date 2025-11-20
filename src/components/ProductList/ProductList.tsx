@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { Image } from "@unpic/react";
 import { useTRPC } from "@/integrations/trpc/react";
-import { isMediaImage } from "@/utils/product";
-import ProductCard from "../ProductCard";
+import { isMediaImage } from "@/lib/product";
+import ProductCard from "../ProductCard/ProductCard";
+import ProductCardContent from "../ProductCard/ProductCardContent";
 
 export default function ProductList() {
   const trpc = useTRPC();
@@ -30,14 +32,22 @@ export default function ProductList() {
         const mediaImage = product.media.nodes.filter(isMediaImage)[0];
 
         return (
-          <ProductCard
-            key={product.id}
-            productName={product.title}
-            productImageUrl={mediaImage?.image?.url}
-            productImageAltText={mediaImage?.image?.altText}
-            productHandle={product.handle}
-            loading={index < 4 ? "eager" : undefined}
-          />
+          <ProductCard key={product.id} slug={product.handle}>
+            <picture className="bg-card">
+              <Image
+                className="w-full h-full object-contain aspect-square mix-blend-multiply"
+                src={mediaImage?.image?.url}
+                alt={mediaImage?.image?.altText ?? product.title}
+                width={mediaImage?.image?.width ?? 1000}
+                height={mediaImage?.image?.height ?? 1000}
+                sizes="(min-width: 1024px) 25vw, 50vw"
+                priority={index < 4}
+              />
+            </picture>
+            <ProductCardContent>
+              <h3>{product.title}</h3>
+            </ProductCardContent>
+          </ProductCard>
         );
       })}
     </div>

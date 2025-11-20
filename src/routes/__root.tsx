@@ -9,9 +9,9 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { TRPCRouter } from "@/integrations/trpc/router";
-import Header from "../components/Header";
+import SiteHeader from "../components/SiteHeader";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
-import appCss from "../styles.css?url";
+import appCss from "../styles/globals.css?url";
 
 export interface RouterAppContext {
   queryClient: QueryClient;
@@ -49,7 +49,7 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
-        <Header />
+        <SiteHeader />
         <main className="grow">
           <Outlet />
         </main>

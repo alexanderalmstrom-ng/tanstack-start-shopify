@@ -1,5 +1,5 @@
 import type { TypedDocumentString } from "@/gql/graphql";
-import { isServer } from "@/utils/common";
+import { isServer } from "@/lib/utils";
 import { shopifyConfig } from "./config";
 import { shopifyResponseSchema } from "./schema";
 

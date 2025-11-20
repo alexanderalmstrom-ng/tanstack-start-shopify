@@ -1,5 +1,5 @@
 import z from "zod";
-import { isServer } from "@/utils/common";
+import { isServer } from "@/lib/utils";
 
 const shopifyConfigSchemaBase = z.object({
   shopName: z.string().min(1, "VITE_SHOPIFY_SHOP_NAME is required"),
