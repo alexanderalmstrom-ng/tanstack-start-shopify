@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Fragment } from "react/jsx-runtime";
 import { Controller, useForm } from "react-hook-form";
 import { AddToCartSchema, addToCartServerFn } from "@/lib/cart.server";
 import AddToCartButton from "./ProductFormAddToCartButton";
@@ -13,7 +14,7 @@ export default function ProductForm({ variantId }: { variantId: string }) {
       quantity: 1,
     },
   });
-  const { mutate: addToCartMutation } = useMutation({
+  const { mutate: addToCartMutation, isPending: isAddingToCart } = useMutation({
     mutationFn: addToCartServerFn,
     onError: (error) => {
       console.error("ProductForm.onError: ", error);
@@ -24,8 +25,8 @@ export default function ProductForm({ variantId }: { variantId: string }) {
     },
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    await addToCartMutation({
+  const onSubmit = handleSubmit((data) => {
+    void addToCartMutation({
       data: {
         variantId: data.variantId,
         quantity: data.quantity,
@@ -40,15 +41,29 @@ export default function ProductForm({ variantId }: { variantId: string }) {
         control={control}
         name="quantity"
         render={({ field }) => (
-          <input
-            {...field}
-            type="number"
-            onChange={(event) => field.onChange(event.target.valueAsNumber)}
-          />
+          <Fragment>
+            <button
+              type="button"
+              onClick={() => field.onChange(field.value ?? 0 - 1)}
+            >
+              -
+            </button>
+            <input
+              {...field}
+              type="number"
+              onChange={(event) => field.onChange(event.target.valueAsNumber)}
+            />
+            <button
+              type="button"
+              onClick={() => field.onChange(field.value ?? 0 + 1)}
+            >
+              +
+            </button>
+          </Fragment>
         )}
       />
-      <AddToCartButton variantId={variantId} disabled={formState.isSubmitting}>
-        {formState.isSubmitting ? "Adding to cart..." : "Add to cart"}
+      <AddToCartButton variantId={variantId} disabled={isAddingToCart}>
+        {isAddingToCart ? "Adding to cart..." : "Add to cart"}
       </AddToCartButton>
       {formState.errors && (
         <div className="text-red-500">{formState.errors.quantity?.message}</div>

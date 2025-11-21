@@ -17,9 +17,9 @@ export const productsQuery = graphql(`
           media(first: 10) {
             nodes {
               __typename
-              id
               ... on MediaImage {
                 image {
+                  id
                   url
                   altText
                   width

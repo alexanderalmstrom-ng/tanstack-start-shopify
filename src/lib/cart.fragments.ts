@@ -10,9 +10,30 @@ export default graphql(`
         edges {
           node {
             id
+            quantity
+            cost {
+              amountPerQuantity {
+                amount
+                currencyCode
+              }
+            }
             merchandise {
               ... on ProductVariant {
                 id
+                product {
+                  title
+                  featuredImage {
+                    id
+                    url
+                    altText
+                    width
+                    height
+                  }
+                }
+                price {
+                  amount
+                  currencyCode
+                }
               }
             }
           }
