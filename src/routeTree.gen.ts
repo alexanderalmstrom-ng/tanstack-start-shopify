@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductSlugRouteImport } from './routes/product/$slug'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
 
-const NotFoundRoute = NotFoundRouteImport.update({
-  id: '/not-found',
-  path: '/not-found',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,47 +31,36 @@ const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/not-found': typeof NotFoundRoute
   '/product/$slug': typeof ProductSlugRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/not-found': typeof NotFoundRoute
   '/product/$slug': typeof ProductSlugRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/not-found': typeof NotFoundRoute
   '/product/$slug': typeof ProductSlugRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/not-found' | '/product/$slug' | '/api/trpc/$'
+  fullPaths: '/' | '/product/$slug' | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/not-found' | '/product/$slug' | '/api/trpc/$'
-  id: '__root__' | '/' | '/not-found' | '/product/$slug' | '/api/trpc/$'
+  to: '/' | '/product/$slug' | '/api/trpc/$'
+  id: '__root__' | '/' | '/product/$slug' | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  NotFoundRoute: typeof NotFoundRoute
   ProductSlugRoute: typeof ProductSlugRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/not-found': {
-      id: '/not-found'
-      path: '/not-found'
-      fullPath: '/not-found'
-      preLoaderRoute: typeof NotFoundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  NotFoundRoute: NotFoundRoute,
   ProductSlugRoute: ProductSlugRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
