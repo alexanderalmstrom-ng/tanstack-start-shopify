@@ -40,8 +40,6 @@ export const addToCartServerFn = createServerFn({ method: "POST" })
       return cart;
     }
 
-    console.log("Adding to cart...", quantity, variantId);
-
     const { data } = await shopifyClient(cartLinesAddMutation, {
       cartId: session.data.cartId,
       lines: [{ quantity, merchandiseId: variantId }],
