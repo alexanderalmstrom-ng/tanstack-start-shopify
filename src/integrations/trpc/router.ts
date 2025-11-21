@@ -3,7 +3,9 @@ import { getProducts } from "@/lib/product";
 import { createTRPCRouter, publicProcedure } from "./init";
 
 const shopifyRouter = {
-  products: publicProcedure.query(() => getProducts()),
+  products: publicProcedure.query(() => {
+    return getProducts();
+  }),
 } satisfies TRPCRouterRecord;
 
 export const trpcRouter = createTRPCRouter({

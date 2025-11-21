@@ -1,3 +1,12 @@
+import { useSessionContext } from "@/lib/session.context";
+
 export default function Cart() {
-  return <div>Cart</div>;
+  const { cart } = useSessionContext();
+
+  return (
+    <div>
+      <h1>Cart</h1>
+      <p>Cart ID: {cart?.id}</p>
+    </div>
+  );
 }

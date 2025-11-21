@@ -35,14 +35,14 @@ export function getProviderContext() {
     },
   });
 
-  const serverHelpers = createTRPCOptionsProxy({
+  const trpc = createTRPCOptionsProxy({
     client: trpcClient,
     queryClient: queryClient,
   });
 
   return {
     queryClient,
-    trpc: serverHelpers,
+    trpc,
   };
 }
 
