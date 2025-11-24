@@ -2,10 +2,10 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { Image } from "@unpic/react";
 import z from "zod";
-import ProductForm from "@/components/shopify/ProductForm/ProductForm";
 import { getFragmentData, graphql } from "@/gql";
 import type { ProductBySlugQuery } from "@/gql/graphql";
 import shopifyClient from "@/integrations/shopify/client";
+import ProductForm from "@/integrations/shopify/components/ProductForm/ProductForm";
 
 export const Route = createFileRoute("/product/$slug")({
   component: RouteComponent,

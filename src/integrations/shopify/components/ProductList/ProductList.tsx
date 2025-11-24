@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import { useTRPC } from "@/integrations/trpc/react";
 import { isMediaImage } from "@/lib/isMediaImage";
-import ProductCard from "../../ProductCard/ProductCard";
-import ProductCardContent from "../../ProductCard/ProductCardContent";
-import ProductCardTitle from "../../ProductCard/ProductCardTitle";
+import ProductCard from "../../../../components/ProductCard/ProductCard";
+import ProductCardContent from "../../../../components/ProductCard/ProductCardContent";
+import ProductCardTitle from "../../../../components/ProductCard/ProductCardTitle";
 
 export default function ProductList() {
   const trpc = useTRPC();
