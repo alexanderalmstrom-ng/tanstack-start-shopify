@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import { useTRPC } from "@/integrations/trpc/react";
-import { isMediaImage } from "@/lib/utils";
+import { isMediaImage } from "@/lib/isMediaImage";
 import ProductCard from "../ProductCard/ProductCard";
 import ProductCardContent from "../ProductCard/ProductCardContent";
 import ProductCardTitle from "../ProductCard/ProductCardTitle";

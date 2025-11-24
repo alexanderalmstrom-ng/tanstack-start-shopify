@@ -11,7 +11,7 @@ import Cart from "@/components/Cart/Cart";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 import SiteHeader from "../components/SiteHeader";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
-import { SessionProvider } from "../lib/session.context";
+import { ShopifySessionProvider } from "../lib/session.context";
 import appCss from "../styles/globals.css?url";
 
 export interface RouterAppContext {
@@ -51,7 +51,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
-        <SessionProvider>
+        <ShopifySessionProvider>
           <SiteHeader />
           <main className="grow">
             {children}
@@ -69,7 +69,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               TanStackQueryDevtools,
             ]}
           />
-        </SessionProvider>
+        </ShopifySessionProvider>
         <Scripts />
       </body>
     </html>

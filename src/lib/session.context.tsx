@@ -1,15 +1,17 @@
 import { createContext, type ReactNode, use } from "react";
 import { useCartQuery } from "./cart.hooks";
 
-type SessionContextType = {
+type ShopifySessionContextType = {
   cart: ReturnType<typeof useCartQuery>["data"];
   cartIsLoading: ReturnType<typeof useCartQuery>["isLoading"];
   cartRefetch: ReturnType<typeof useCartQuery>["refetch"];
 };
 
-const SessionContext = createContext<SessionContextType | undefined>(undefined);
+const ShopifySessionContext = createContext<
+  ShopifySessionContextType | undefined
+>(undefined);
 
-export function SessionProvider({ children }: { children: ReactNode }) {
+export function ShopifySessionProvider({ children }: { children: ReactNode }) {
   const {
     data: cart,
     isLoading: cartIsLoading,
@@ -17,17 +19,21 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   } = useCartQuery();
 
   return (
-    <SessionContext.Provider value={{ cart, cartIsLoading, cartRefetch }}>
+    <ShopifySessionContext.Provider
+      value={{ cart, cartIsLoading, cartRefetch }}
+    >
       {children}
-    </SessionContext.Provider>
+    </ShopifySessionContext.Provider>
   );
 }
 
-export function useSessionContext() {
-  const context = use(SessionContext);
+export function useShopifySessionContext() {
+  const context = use(ShopifySessionContext);
 
   if (!context) {
-    throw new Error("useSession must be used within SessionProvider");
+    throw new Error(
+      "useShopifySessionContext must be used within ShopifySessionProvider",
+    );
   }
 
   return context;
