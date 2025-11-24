@@ -10,7 +10,7 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import Cart from "@/integrations/shopify/components/Cart/Cart";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 import SiteHeader from "../components/SiteHeader";
-import { ShopifySessionProvider } from "../integrations/shopify/session/session.context";
+import { ShopifySessionProvider } from "../integrations/shopify/lib/session/session.context";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles/globals.css?url";
 

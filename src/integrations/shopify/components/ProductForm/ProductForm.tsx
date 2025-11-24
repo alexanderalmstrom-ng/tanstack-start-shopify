@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import {
   AddToCartSchema,
   addToCartServerFn,
-} from "@/integrations/shopify/cart/cart.server";
+} from "@/integrations/shopify/lib/cart/cart.server";
 import AddToCartButton from "./ProductFormAddToCartButton";
 
 export default function ProductForm({ variantId }: { variantId: string }) {

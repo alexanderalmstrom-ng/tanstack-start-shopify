@@ -1,5 +1,5 @@
 import { Image } from "@unpic/react";
-import { useShopifySessionContext } from "@/integrations/shopify/session/session.context";
+import { useShopifySessionContext } from "@/integrations/shopify/lib/session/session.context";
 
 export default function Cart() {
   const { cart, cartIsLoading } = useShopifySessionContext();
