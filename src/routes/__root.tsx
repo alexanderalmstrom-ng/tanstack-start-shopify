@@ -3,7 +3,6 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
-  Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
@@ -12,6 +11,7 @@ import Cart from "@/components/Cart/Cart";
 import type { TRPCRouter } from "@/integrations/trpc/router";
 import SiteHeader from "../components/SiteHeader";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { SessionProvider } from "../lib/session.context";
 import appCss from "../styles/globals.css?url";
 
 export interface RouterAppContext {
@@ -41,33 +41,35 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       },
     ],
   }),
-  component: RootComponent,
+  shellComponent: RootDocument,
 });
 
-function RootComponent() {
+function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col antialiased">
-        <SiteHeader />
-        <main className="grow">
-          <Outlet />
-          <Cart />
-        </main>
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-          ]}
-        />
+        <SessionProvider>
+          <SiteHeader />
+          <main className="grow">
+            {children}
+            <Cart />
+          </main>
+          <TanStackDevtools
+            config={{
+              position: "bottom-right",
+            }}
+            plugins={[
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+              TanStackQueryDevtools,
+            ]}
+          />
+        </SessionProvider>
         <Scripts />
       </body>
     </html>
